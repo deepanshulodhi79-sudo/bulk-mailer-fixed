@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// ✅ Default route
+// ✅ Default route (homepage → login.html)
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
@@ -24,10 +24,32 @@ app.post("/login", (req, res) => {
   }
 });
 
-// Send Mail
+// ✅ Send Mail Route
 app.post("/send", async (req, res) => {
-  // ... तुम्हारा पुराना send mail code यहाँ रहेगा
+  const { senderName, email, pass, subject, message, recipients } = req.body;
+
+  try {
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user: email, pass: pass }
+    });
+
+    let recipientList = recipients.split(/\r?\n/).filter(r => r.trim() !== "");
+
+    for (let r of recipientList) {
+      await transporter.sendMail({
+        from: `"${senderName}" <${email}>`,   // ✅ Sender Name + Email
+        to: r,
+        subject: subject,
+        text: message,
+      });
+    }
+
+    res.json({ success: true, message: "✅ Emails sent successfully" });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: "❌ Error: " + err.message });
+  }
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
