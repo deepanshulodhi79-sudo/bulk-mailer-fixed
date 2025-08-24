@@ -45,9 +45,11 @@ input:focus, textarea:focus {
   box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
 }
 
+/* ✅ अब textareas resizeable हैं */
 textarea {
-  resize: none;
-  min-height: 80px;
+  resize: vertical;      /* ऊपर-नीचे drag करके size बदल सकता है */
+  min-height: 100px;
+  max-height: 400px;
 }
 
 button {
