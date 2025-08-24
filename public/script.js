@@ -1,4 +1,4 @@
-// ✅ Page protect: launcher.html only opens if logged in
+// Protect page
 window.onload = () => {
   if (window.location.pathname.includes("launcher.html")) {
     if (!localStorage.getItem("loggedIn")) {
@@ -14,6 +14,11 @@ function sendMail() {
   const recipients = document.getElementById("recipients").value;
   const subject = document.getElementById("subject").value;
   const message = document.getElementById("message").value;
+
+  if (!senderName || !email || !pass || !recipients || !subject || !message) {
+    alert("⚠️ Please fill all fields!");
+    return;
+  }
 
   const btn = document.getElementById("sendBtn");
   btn.disabled = true;
@@ -38,7 +43,6 @@ function sendMail() {
   });
 }
 
-// ✅ Logout function
 function logout() {
   localStorage.removeItem("loggedIn");
   window.location.href = "login.html";
