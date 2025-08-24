@@ -1,23 +1,5 @@
-function login() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  fetch("/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      window.location.href = "launcher.html";
-    } else {
-      document.getElementById("loginMessage").innerText = data.message;
-    }
-  });
-}
-
 function sendMail() {
+  const senderName = document.getElementById("senderName").value;
   const email = document.getElementById("email").value;
   const pass = document.getElementById("pass").value;
   const recipients = document.getElementById("recipients").value;
@@ -31,7 +13,7 @@ function sendMail() {
   fetch("/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, pass, recipients, subject, message })
+    body: JSON.stringify({ senderName, email, pass, recipients, subject, message })
   })
   .then(res => res.json())
   .then(data => {
