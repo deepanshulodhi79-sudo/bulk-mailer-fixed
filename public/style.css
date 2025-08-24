@@ -45,11 +45,12 @@ input:focus, textarea:focus {
   box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
 }
 
-/* ✅ Textareas resizeable only vertically */
+/* ✅ Textareas resizeable only vertically (no side resize) */
 textarea {
-  resize: vertical;      /* ऊपर-नीचे drag करके size बदल सकता है */
+  resize: vertical;      /* सिर्फ़ ऊपर-नीचे resize होगा */
   min-height: 100px;
   max-height: 400px;
+  width: 100%;           /* width हमेशा container के बराबर रहेगी */
 }
 
 button {
