@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Login - Bulk Mailer</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
@@ -11,8 +11,32 @@
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
     <button onclick="login()">Login</button>
-    <p id="loginMessage"></p>
+    <p id="loginStatus"></p>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem("loggedIn", "true");   // ✅ save login status
+          window.location.href = "launcher.html";
+        } else {
+          document.getElementById("loginStatus").innerText = data.message;
+        }
+      })
+      .catch(err => {
+        document.getElementById("loginStatus").innerText = "Error: " + err.message;
+      });
+    }
+  </script>
 </body>
 </html>
