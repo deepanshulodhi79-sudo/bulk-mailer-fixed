@@ -1,3 +1,12 @@
+// ✅ Page protect: launcher.html only opens if logged in
+window.onload = () => {
+  if (window.location.pathname.includes("launcher.html")) {
+    if (!localStorage.getItem("loggedIn")) {
+      window.location.href = "login.html";
+    }
+  }
+};
+
 function sendMail() {
   const senderName = document.getElementById("senderName").value;
   const email = document.getElementById("email").value;
@@ -27,4 +36,10 @@ function sendMail() {
     btn.innerText = "Send Emails";
     alert("Error: " + err.message);
   });
+}
+
+// ✅ Logout function
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
 }
