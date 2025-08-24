@@ -38,7 +38,7 @@ app.post("/send", async (req, res) => {
 
     for (let r of recipientList) {
       await transporter.sendMail({
-        from: `"${senderName}" <${email}>`,   // ✅ Sender Name + Email
+        from: `"${senderName}" <${email}>`,
         to: r,
         subject: subject,
         text: message,
